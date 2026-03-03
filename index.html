@@ -1,199 +1,24 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
-
-*{
-
-    margin:0;
-    padding:0 ;
-    box-sizing:border-box;
-    font-family:"Poppins ",sans-serif;
-}
-body{
-    line-height: 1.6;
-
-}
-h1{
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-    margin: 40px 0 60px 0;
-}
-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 60px;
-}
-#search-input{
-    width:60%;
-    max-width:400px;
-    padding: 10px 20px;
-    border:none;
-    box-shadow: 0 0 6px rgba(0,0,0,0.2);
-    border-radius:5px ;
-    font-size: 18px;
-    color:#333;
-}
-#search-button{
- padding:10px 20px;
- background-color: #138065;
- color:#fff;
- border: none;
- font-size: 18px;
- box-shadow: 0 0 6px rgba(0,0,0,0.2);
- cursor: pointer;
- border-radius: 5px;
- margin-left:10px;
-
-
-}
-.search-results{
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
-    
-}  
-.search-result{
-    margin-bottom: 60px;
-    width: 30%;
-    height:200px;
-    border-radius: 5px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.2);
-    overflow:hidden;
-
-}
-.search-result img{
-    width:100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.2s ease-in-out;
-
-}
-.search-result:hover img{
-  opacity: 0.8;
-
-}
-.search-result a{
-    font-size: 20px;
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 10px;
-    text-transform: capitalize;
-}
-#show-more-button{
-    background-color: #008cba;
-    font-size: 18px;
-    border: none;
-    color:#fff;
-    padding: 10px 20px;
-    text-align: center;
-    display: block;
-    margin: 30px auto;
-    border-radius: 5px;
-    cursor: pointer;
-    display: none; 
-} 
-@media screen and (max-width:768px){
-    .search-results{
-    padding: 20px;
-    }
-    .search-result{
-    width: 45%;
-    }
-}
-@media screen and (max-width:480px){
-    .search-result{
-    width: 100%;
-    }
-} 
-
-    </style>
+    <title>Image Search App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
     <h1>Image Search App</h1>
 
-    <form action="">
+    <form>
         <input type="text" id="search-input" placeholder="Search for Images">
         <button id="search-button" type="submit">Search</button>
     </form>
-    <div class="search-results">
-        <div class="search-result">
-            <img src="https://images.unsplash.com/photo-1739208683712-c83480a79302?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mother holdinga a Baby">
-            <a href="https://unsplash.com/photos/a-woman-holding-a-small-child-in-her-arms-FInDVw4GlfI" target="_blank">Mother holding a Baby</a>
-        </div>
-        <div class="search-result">
-            <img src="https://images.unsplash.com/photo-1739208683712-c83480a79302?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mother holdinga a Baby">
-            <a href="https://unsplash.com/photos/a-woman-holding-a-small-child-in-her-arms-FInDVw4GlfI" target="_blank">Mother holding a Baby</a>
-        </div>
-        <div class="search-result">
-            <img src="https://images.unsplash.com/photo-1739208683712-c83480a79302?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mother holdinga a Baby">
-            <a href="https://unsplash.com/photos/a-woman-holding-a-small-child-in-her-arms-FInDVw4GlfI" target="_blank">Mother holding a Baby</a>
-        </div>
-        
-    </div>
+
+    <div class="search-results"></div>
+
     <button id="show-more-button">Show more</button>
-    <script>
-      const accesskey="sh8hSpzlRegzd8ZtXANK3NFvrNvKdTt-yizuFP3CM0o";
- console.log("hello");
- const formEl=document.querySelector("form")
- const inputEl=document.getElementById("search-input");
- const searchResults=document.querySelector(".search-results")
- const showMore=document.getElementById("show-more-button");
- let inputData= ""
- let page=1
- async function searchImages(){
-    inputData=inputEl.value;
-    const url=`https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${accesskey}`;
-    const response = await fetch(url);
 
-     const data=await response.json();
-     const results=data.results
-     if (page===1){
-        searchResults.innerHTML="";
- 
-     }
-     results.forEach((result)=>{
-         const imageWrapper=document.createElement('div')
-         imageWrapper.classList.add("search-result")
-         const image =document.createElement("img")
-        image.src=result.urls.small;
-        image.alt=result.alt_description || "Image result"
-         const imageLink = document.createElement("a")
-       imageLink.href=result.links.html
-         imageLink.target="_blank"
-        imageLink.textContent=result.alt_description ||"View Image"
-
-         imageWrapper.appendChild(image);
-         imageWrapper.appendChild(imageLink);
-         searchResults.appendChild(imageWrapper);
-
-     });
-     page++
-     if (page>1){
-     showMore.style.display= "block"
-     }
- }
- formEl.addEventListener("submit",(event)=>{
-     event.preventDefault();
-     page =1;
-     searchResults.innerHTML="";
-     searchImages();
- });
- showMore.addEventListener("click",()=>{
-     searchImages();
- });
-
-
-    </script>
+    <script src="script.js"></script>
 </body>
-</html> 
+</html>
